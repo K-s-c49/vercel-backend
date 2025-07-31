@@ -32,19 +32,15 @@ app.get('/', (req, res) => {
 // Get PORT from environment variables or fallback to 5000
 const PORT = process.env.PORT || 5000;
 
-// Connect to MongoDB and start the server
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => {
-    console.log('✅ Connected to MongoDB');
 
-    // Start Express server
+// Connect to MongoDB and start the server
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log(" MongoDB connected");
     app.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      console.log(` Server running on http://localhost:${PORT}`);
     });
   })
   .catch((err) => {
-    console.error('❌ MongoDB connection error:', err);
+    console.error("MongoDB connection error:", err);
   });

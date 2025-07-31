@@ -4,13 +4,13 @@ const mongoose = require('mongoose');
 const User = require('./model/user.js');
 
 
-mongoose.connect('mongodb://localhost:27017/ecommerce').then(async () => {
+mongoose.connect('mongodb+srv://khushalsinghchundawat144:kri9gmI2DI8wm84w@cluster0.nddtxkr.mongodb.net/ecommerce').then(async () => {
   await User.create({
     name: 'Admin',
-    email: 'khushal02@gmail.com',
-    password: '123',
+    email: 'khushal49@gmail.com',
+    password: '1149',
     role: 'admin',
-  });
+  }); 
   console.log('✅ Admin created');
   process.exit();
 });
