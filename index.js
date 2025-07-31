@@ -1,26 +1,46 @@
 // server.js
-require('dotenv').config(); // Load .env file
+
+// Load environment variables from .env file
+require('dotenv').config();
+
+// Import required packages
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+
+// Import route modules
 const authRoutes = require('./routes/authRoute.js');
 const productRoutes = require('./routes/productRoute.js');
-const signupRoutes = require("./routes/signuproute.js")
+const signupRoutes = require('./routes/signupRoute.js'); // Fixed capitalization
 
-
-
+// Create an Express application
 const app = express();
-app.use(cors()); // Allow frontend requests
-app.use(express.json()); // Parse JSON
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api', signupRoutes);
+// Middleware
+app.use(cors()); // Enables Cross-Origin Resource Sharing
+app.use(express.json()); // Parses incoming JSON requests
 
-// Connect to MongoDB and start server
-mongoose.connect(process.env.MONGO_URI)
+// Use routes
+app.use('/api/auth', authRoutes);        // For login/authentication
+app.use('/api/products', productRoutes); // For product-related endpoints
+app.use('/api', signupRoutes);           // For signup routes
+
+// Get PORT from environment variables or fallback to 5000
+const PORT = process.env.PORT || 5000;
+
+// Connect to MongoDB and start the server
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
   .then(() => {
-    app.listen(5000, () => console.log(' Server running '));
+    console.log('✅ Connected to MongoDB');
+
+    // Start Express server
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
+    });
   })
-  .catch((err) => console.error('MongoDB connection error:', err));
+  .catch((err) => {
+    console.error('❌ MongoDB connection error:', err);
+  });
