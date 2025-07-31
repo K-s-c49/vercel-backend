@@ -24,6 +24,10 @@ app.use(express.json()); // Parses incoming JSON requests
 app.use('/api/auth', authRoutes);        // For login/authentication
 app.use('/api/products', productRoutes); // For product-related endpoints
 app.use('/api', signupRoutes);           // For signup routes
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
+
 
 // Get PORT from environment variables or fallback to 5000
 const PORT = process.env.PORT || 5000;
